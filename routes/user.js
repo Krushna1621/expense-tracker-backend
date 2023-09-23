@@ -1,12 +1,15 @@
-const path=require('path');
+const path = require('path');
 
-const express=require('express');
+const express = require('express');
 
-const userController=require('../controllers/user')
+const userController = require('../controllers/user');
 
-const router=express.Router()
+const router = express.Router();
 
+router.post('/add-user', userController.postUser);
 
-router.post('/add-user',userController.postUser)
+router.post('/login', userController.postLogin);
 
-module.exports=router;
+//router.delete('/delete-expense/:id', expenseController.deleteExpense);
+
+module.exports = router;
