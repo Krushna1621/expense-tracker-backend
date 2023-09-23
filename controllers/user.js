@@ -1,26 +1,28 @@
-const User = require('../models/user');
+const User=require('../models/user')
 
-exports.postUser = async (req, res, next) => {
-    try {
-        console.log('inside post');
-        if(!req.body.name) {
-            throw new Error('Name is mandatory');
-        }
-        if(!req.body.email) {
-            throw new Error('Email is mandatory');
-        }
-        if(!req.body.password) {
-            throw new Error('Password is mandatory');
-        }
-        const name = req.body.name;
-        const email = req.body.email;
-        const password = req.body.password;
+function stringInvalid(string){
+    if(string==undefined || string.length==0){
+        return true;
 
-        const data = await User.create( {name: name, email: email, password: password});
-        res.status(201).json({newUserDetail: data});
-    } catch(err) {
-        res.status(500).json({
-            error: err
-        })
+        return false;
     }
-};
+}
+
+exports.postUser=async(req,res,next)=>{
+    try{
+        console.log('inside post')
+        const name=req.body.name;
+        const email=req.body.email;
+        const password=re.body.password;
+
+        if(stringInvalid(name)||stringInvalid(email)||stringInvalid(password))
+          return res.status(400).json({err:"Bad parameters. Some details are missing"})
+
+        const data=await User.create({name:name,email:email,password:password});
+        res.status(201).json({message:'Successfully created new user'})
+    }catch(err){
+         res.status(500).json({
+            error: err
+         })
+    }
+}
